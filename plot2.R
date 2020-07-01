@@ -28,19 +28,23 @@ Alldata <- read.csv("household_power_consumption.txt", header = TRUE, sep = ";",
 ## Filter data for 2 days with limited coulmns 
 powerdata <- subset(Alldata, 
                     as.Date(Date, "%d/%m/%Y")==as.Date("01/02/2007","%d/%m/%Y") | 
-                    as.Date(Date, "%d/%m/%Y")==as.Date("02/02/2007","%d/%m/%Y"),  
+                      as.Date(Date, "%d/%m/%Y")==as.Date("02/02/2007","%d/%m/%Y"),  
                     select = c("Date", "Time", "Global_active_power")
-                    )
+)
 
 rm(Alldata)
+
 powerdata$Date <- as.Date(powerdata$Date,"%d/%m/%Y")
+powerdata<-cbind(powerdata, "DateTime" = as.POSIXct(paste(powerdata$Date, powerdata$Time)))
 
-png(filename = "plot1.png", width = 480, height = 480, units = "px")
+png(filename = "plot2.png", width = 480, height = 480, units = "px")
 
-hist(as.numeric(powerdata$Global_active_power), 
-     col = "Red", 
-     xlab = "Global Active Power (kilowatts)", 
-     main = "Global Active Power")
+
+with(powerdata, {
+  plot(as.numeric(Global_active_power)~DateTime, type="l",
+       ylab="Global Active Power (kilowatts)", xlab="")
+})
+
 dev.off()
 rm(powerdata)
 
