@@ -22,21 +22,26 @@ if (!file.exists("household_power_consumption.txt")){
 }
 
 
-## Read data 
+## Read all data from file 
 ##############################
 Alldata <- read.csv2("household_power_consumption.txt", header = TRUE, sep = ";")
-  nm <- names(Alldata)
-#powerdata <- subset(Alldata, as.Date(Date, "%d/%m/%y" )==("01/02/2007"), select(Date, Time, Global_active_power, Voltage))
-  ax <- dim(Alldata)
-  
+
+## Filter data for 2 days with limited coulmns 
 powerdata <- subset(Alldata, 
-                    as.Date(Date, "%d/%m/%y")==as.Date("01/02/2007","%d/%m/%y") | 
-                    as.Date(Date, "%d/%m/%y")==as.Date("02/02/2007","%d/%m/%y"),  
+                    as.Date(Date, "%d/%m/%Y")==as.Date("01/02/2007","%d/%m/%Y") | 
+                    as.Date(Date, "%d/%m/%Y")==as.Date("02/02/2007","%d/%m/%Y"),  
                     select = c("Date", "Time", "Global_active_power", "Voltage")
                     )
-#, select(Date, Time, Global_active_power, Voltage))
 
 rm(Alldata)
 
-xx <- dim(powerdata)
+png(filename = "plot1.png", width = 480, height = 480, units = "px")
+
+#hist(as.numeric(powerdata$Global_active_power), col = "Red")
+hist(as.numeric(powerdata$Global_active_power), 
+     col = "Red", 
+     xlab = "Global Active Power (kilowatts)", 
+     main = "Global Active Power")
+dev.off()
+
 
