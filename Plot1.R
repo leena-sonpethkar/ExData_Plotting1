@@ -30,8 +30,8 @@ Alldata <- read.csv2("household_power_consumption.txt", header = TRUE, sep = ";"
   ax <- dim(Alldata)
   
 powerdata <- subset(Alldata, 
-                    as.Date(Date, "%d/%m/%y" )==as.Date("01/02/2007","%d/%m/%y") | 
-                    as.Date(Date, "%d/%m/%y" )==as.Date("02/02/2007","%d/%m/%y"),  
+                    as.Date(Date, "%d/%m/%y")==as.Date("01/02/2007","%d/%m/%y") | 
+                    as.Date(Date, "%d/%m/%y")==as.Date("02/02/2007","%d/%m/%y"),  
                     select = c("Date", "Time", "Global_active_power", "Voltage")
                     )
 #, select(Date, Time, Global_active_power, Voltage))
